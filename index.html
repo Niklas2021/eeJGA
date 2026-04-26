@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JGA Erik 2025 – Mitmachen & Abstimmen</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --amber:#E8960A;--amber2:#FEF3D7;--amber3:#7A4E04;--amber-glow:rgba(232,150,10,0.15);
+  --bg:#0E0E0E;--surface:#1A1A1A;--surface2:#222;--surface3:#262626;
+  --border:#2E2E2E;--border-amber:rgba(232,150,10,0.3);
+  --text:#F0EEE8;--muted:#888;--muted2:#AAA;
+  --green:#22C55E;--green-bg:#0F2818;
+  --yellow:#FBBF24;--yellow-bg:#2A2212;
+  --red:#FCA5A5;--red-bg:#2A1212;
+  --blue:#93C5FD;--blue-bg:#101824;
+  --purple:#C4B5FD;--purple-bg:#1E1230;
+}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;line-height:1.6}
+
+/* HERO */
+.hero{padding:60px 24px 30px;max-width:860px;margin:0 auto;text-align:center;position:relative}
+.hero::before{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:80%;height:200px;background:radial-gradient(ellipse at center,var(--amber-glow) 0%,transparent 70%);pointer-events:none;z-index:0}
+.hero-inner{position:relative;z-index:1}
+.hero-label{font-size:11px;letter-spacing:4px;color:var(--amber);text-transform:uppercase;margin-bottom:14px;font-weight:600}
+.hero h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(56px,12vw,104px);line-height:0.92;color:var(--text);margin-bottom:18px;letter-spacing:1px}
+.hero h1 span{color:var(--amber)}
+.hero-sub{font-size:16px;color:var(--muted2);max-width:520px;margin:0 auto 24px;line-height:1.6}
+.hero-meta{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;font-size:12px}
+.meta-pill{padding:6px 12px;border-radius:20px;border:1px solid var(--border);color:var(--muted)}
+.meta-pill strong{color:var(--text);font-weight:500}
+
+/* PROGRESS */
+.progress-line{display:flex;justify-content:center;gap:8px;margin:30px auto 0;max-width:300px}
+.dot{width:10px;height:10px;border-radius:50%;background:var(--surface3);border:1px solid var(--border)}
+
+/* STEPS WRAPPER */
+.steps-wrap{max-width:780px;margin:0 auto;padding:30px 16px 60px}
+
+/* STEP CARD */
+.step{background:var(--surface);border:1px solid var(--border);border-radius:18px;margin-bottom:14px;overflow:hidden;transition:border-color 0.2s, box-shadow 0.2s}
+.step.open{border-color:var(--border-amber);box-shadow:0 0 0 1px rgba(232,150,10,0.1)}
+.step-head{padding:22px 24px;cursor:pointer;display:flex;align-items:center;gap:18px;user-select:none}
+.step-num{
+  width:48px;height:48px;border-radius:50%;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Bebas Neue',sans-serif;font-size:22px;
+  background:var(--surface3);color:var(--amber);
+  border:1px solid var(--border);transition:all 0.2s
+}
+.step.open .step-num{background:var(--amber);color:#111;border-color:var(--amber)}
+.step-info{flex:1;min-width:0}
+.step-title{font-family:'Bebas Neue',sans-serif;font-size:24px;letter-spacing:0.5px;color:var(--text);line-height:1.1;margin-bottom:3px}
+.step-desc{font-size:13px;color:var(--muted2)}
+.step-time{font-size:11px;color:var(--muted);margin-top:4px;display:flex;align-items:center;gap:5px}
+.chev{font-size:20px;color:var(--muted);transition:transform 0.25s ease;flex-shrink:0;margin-left:8px}
+.step.open .chev{transform:rotate(180deg);color:var(--amber)}
+.step-body{display:none;padding:0 24px 24px;border-top:1px solid var(--border)}
+.step.open .step-body{display:block;padding-top:20px;animation:slideDown 0.25s ease}
+@keyframes slideDown{from{opacity:0;transform:translateY(-5px)}to{opacity:1;transform:none}}
+
+.body-text{font-size:15px;color:var(--muted2);margin-bottom:20px;line-height:1.7}
+.body-text strong{color:var(--text);font-weight:500}
+
+/* POLL EMBED PLACEHOLDER */
+.poll-embed{
+  background:var(--surface2);border:1px dashed var(--border);
+  border-radius:14px;padding:28px 24px;text-align:center;margin:20px 0
+}
+.poll-embed-icon{font-size:32px;margin-bottom:10px;display:block}
+.poll-embed-title{font-size:16px;font-weight:600;margin-bottom:6px;color:var(--text)}
+.poll-embed-sub{font-size:13px;color:var(--muted);margin-bottom:18px;max-width:440px;margin-left:auto;margin-right:auto}
+.poll-embed-code{background:#0A0A0A;border:1px solid var(--border);border-radius:8px;padding:10px 14px;font-family:'Inter',monospace;font-size:11px;color:#A0C4FF;text-align:left;margin-bottom:14px;word-break:break-all;line-height:1.5}
+.poll-embed-code .c{color:#666}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:10px 20px;border-radius:8px;font-weight:500;font-size:13px;text-decoration:none;border:none;cursor:pointer;font-family:'Inter',sans-serif;transition:all 0.18s}
+.btn-prim{background:var(--amber);color:#111}
+.btn-prim:hover{opacity:0.92}
+.btn-out{background:transparent;color:var(--text);border:1px solid var(--border)}
+.btn-out:hover{border-color:var(--amber);color:var(--amber)}
+.btn-row{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+
+/* OPTIONS PREVIEW (in steps 2 and 3) */
+.options-preview{display:flex;flex-direction:column;gap:8px;margin:14px 0}
+.option-item{
+  background:var(--surface3);border:1px solid var(--border);
+  border-radius:10px;padding:12px 16px;display:flex;align-items:center;gap:12px;
+  font-size:14px
+}
+.option-item .ico{
+  width:24px;height:24px;border-radius:6px;background:var(--amber-glow);
+  color:var(--amber);font-size:13px;font-weight:600;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0
+}
+.option-item .lbl strong{color:var(--text);font-weight:500}
+.option-item .lbl small{display:block;color:var(--muted);font-size:12px;margin-top:2px}
+
+/* TIP BLOCK */
+.tip-block{
+  background:var(--amber-glow);border:1px solid rgba(232,150,10,0.25);
+  border-radius:10px;padding:14px 18px;font-size:14px;color:var(--amber2);
+  margin:16px 0;display:flex;align-items:flex-start;gap:10px
+}
+.tip-block .icon{flex-shrink:0;font-size:16px;line-height:1.4}
+.tip-block strong{color:var(--amber);font-weight:600}
+
+/* SCENARIOS GRID */
+.scenarios-section{margin-top:24px}
+.scenarios-section-head{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:14px}
+.scenarios-section-title{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:0.5px}
+.filter-bar{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:18px}
+.chip{
+  padding:6px 14px;border-radius:20px;border:1px solid var(--border);
+  background:transparent;cursor:pointer;font-size:11px;font-weight:500;
+  color:var(--muted);transition:all 0.18s;font-family:'Inter',sans-serif;
+  letter-spacing:0.3px
+}
+.chip.on{background:var(--amber);color:#111;border-color:var(--amber)}
+.chip:hover:not(.on){border-color:var(--amber);color:var(--amber)}
+
+.card{
+  background:var(--surface2);border:1px solid var(--border);
+  border-radius:12px;margin-bottom:10px;overflow:hidden;transition:border-color 0.18s
+}
+.card:hover{border-color:#444}
+.card.open{border-color:var(--border-amber)}
+.card-head{padding:14px 18px;cursor:pointer;display:flex;align-items:center;gap:12px;user-select:none}
+.num{
+  width:32px;height:32px;border-radius:50%;background:var(--bg);
+  border:1px solid var(--border);display:flex;align-items:center;justify-content:center;
+  font-family:'Bebas Neue',sans-serif;font-size:16px;color:var(--amber);flex-shrink:0
+}
+.card.open .num{background:var(--amber);color:#111;border-color:var(--amber)}
+.card-meta{flex:1;min-width:0}
+.card-title{font-weight:600;font-size:14px;line-height:1.3;color:var(--text)}
+.card-sub{font-size:12px;color:var(--muted);margin-top:2px;line-height:1.4}
+.badges{display:flex;gap:5px;flex-wrap:wrap;margin-left:auto;padding-left:10px;flex-shrink:0}
+.badge{font-size:10px;font-weight:500;padding:3px 8px;border-radius:20px;white-space:nowrap;letter-spacing:0.3px}
+.bg-c{background:var(--green-bg);color:var(--green)}
+.bm-c{background:var(--yellow-bg);color:var(--yellow)}
+.bp-c{background:var(--red-bg);color:var(--red)}
+.bd-c{background:var(--blue-bg);color:var(--blue)}
+.bt-c{background:var(--purple-bg);color:var(--purple)}
+.chev2{font-size:16px;color:var(--muted);margin-left:6px;flex-shrink:0;transition:transform 0.2s}
+.card.open .chev2{transform:rotate(180deg)}
+.card-body{display:none;padding:0 18px 18px;border-top:1px solid var(--border)}
+.card.open .card-body{display:block;padding-top:14px}
+
+.tl{list-style:none;padding-left:6px}
+.tl li{padding:6px 0 6px 22px;position:relative;font-size:13px;border-left:2px solid #2A2A2A;color:#C0BCB4}
+.tl li::before{content:'';position:absolute;left:-5px;top:13px;width:8px;height:8px;border-radius:50%;background:var(--amber)}
+.tl li strong{color:var(--amber);font-size:10px;display:block;text-transform:uppercase;letter-spacing:0.5px;font-weight:600}
+.tl li:last-child{border-left-color:transparent}
+
+.info-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:8px;margin-top:14px}
+.ib{background:var(--bg);border-radius:8px;padding:9px 12px}
+.ib-l{font-size:10px;color:var(--muted);margin-bottom:2px;text-transform:uppercase;letter-spacing:0.5px}
+.ib-v{font-weight:600;font-size:13px;color:var(--text)}
+
+.cost-table{margin-top:12px;font-size:12px;background:var(--bg);border-radius:8px;padding:10px 14px}
+.cost-table table{width:100%;border-collapse:collapse}
+.cost-table td{padding:3px 0;color:var(--muted2)}
+.cost-table td:last-child{text-align:right;font-weight:500;color:var(--text)}
+.cost-table tr.total td{padding-top:8px;border-top:1px solid var(--border);margin-top:6px;color:var(--amber);font-weight:600;font-size:13px}
+
+.tip{
+  background:var(--amber-glow);border-left:3px solid var(--amber);
+  border-radius:0 8px 8px 0;padding:10px 14px;font-size:12px;color:var(--amber2);
+  margin-top:14px;line-height:1.5
+}
+
+/* OWN IDEA SLOT */
+.own-idea-card{
+  background:linear-gradient(135deg,var(--surface2) 0%,var(--surface3) 100%);
+  border:1px dashed var(--border-amber);border-radius:12px;
+  padding:18px;margin-top:14px;text-align:center
+}
+.own-idea-card h4{font-family:'Bebas Neue',sans-serif;font-size:18px;color:var(--amber);margin-bottom:6px;letter-spacing:0.5px}
+.own-idea-card p{font-size:13px;color:var(--muted2);max-width:420px;margin:0 auto}
+
+/* NEXT BTN inside step body */
+.next-step{
+  display:flex;justify-content:flex-end;margin-top:20px;
+  padding-top:16px;border-top:1px solid var(--border)
+}
+.btn-next{
+  background:transparent;color:var(--amber);border:1px solid var(--border-amber);
+  padding:8px 16px;border-radius:8px;font-size:12px;font-weight:500;
+  cursor:pointer;font-family:'Inter',sans-serif;transition:all 0.18s
+}
+.btn-next:hover{background:var(--amber);color:#111;border-color:var(--amber)}
+
+/* FOOTER */
+footer{border-top:1px solid var(--border);padding:30px 24px;text-align:center;font-size:12px;color:var(--muted);max-width:780px;margin:0 auto}
+footer .heart{color:var(--amber)}
+
+@media(max-width:600px){
+  .badges{display:none}
+  .hero h1{font-size:64px}
+  .step-head{padding:18px 16px;gap:14px}
+  .step-num{width:42px;height:42px;font-size:20px}
+  .step-title{font-size:20px}
+  .step-body{padding:0 16px 18px}
+  .steps-wrap{padding:20px 12px 50px}
+  .card-head{padding:12px 14px;gap:10px}
+}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="hero-inner">
+    <div class="hero-label">Junggesellenabschied</div>
+    <h1>JGA <span>ERIK</span><br>2025</h1>
+    <p class="hero-sub">Klick dich durch die 5 Schritte – stimme bei jedem ab. Anonym, kein Login. Dauert ~5 Minuten.</p>
+    <div class="hero-meta">
+      <span class="meta-pill">📍 <strong>Mühlhausen</strong> Thüringen</span>
+      <span class="meta-pill">👥 <strong>max. 8 Mann</strong> Crew</span>
+      <span class="meta-pill">🎯 <strong>1 Tag</strong> Programm</span>
+    </div>
+    <div class="progress-line"><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
+  </div>
+</header>
+
+<main class="steps-wrap">
+
+  <!-- ═══════════════ STEP 1 ═══════════════ -->
+  <section class="step open" id="s1">
+    <div class="step-head" onclick="toggleStep(1)">
+      <div class="step-num">01</div>
+      <div class="step-info">
+        <div class="step-title">Worum geht's hier</div>
+        <div class="step-desc">Kurze Erklärung was dich erwartet</div>
+      </div>
+      <span class="chev">▾</span>
+    </div>
+    <div class="step-body">
+    <ol style="font-size:14px;color:var(--muted2);padding-left:24px;line-height:2;margin-bottom:10px">
+        💥<strong>ERSTE REGEL DES FIGHT CLUBS: Ihr verliert kein Wort über den Fight Club</strong>💥
+    </br>Erik soll von nichts wissen.
+      </ol>
+      <ol style="font-size:14px;color:var(--muted2);padding-left:24px;line-height:2;margin-bottom:10px">
+        <li>Welcher <strong style="color:var(--text)">Termin</strong> passt euch?</li>
+        <li>Wie kommt ihr zum <strong style="color:var(--text)">Treffpunkt</strong>?</li>
+        <li>Welcher <strong style="color:var(--text)">Trip</strong> klingt am besten? (10 Vorschläge im Schritt 4)</li>
+      </ol>
+      <div class="tip-block">
+        <span class="icon">💡</span>
+        <div><strong>Anonym:</strong> Ich seh nur die Stimmen, nicht wer wie abgestimmt hat. Stimm ehrlich ab – egal ob Action, Auto-Kram oder günstig/teuer.</div>
+      </div>
+      <p class="body-text">
+        Bitte <strong>bis Mittwoch</strong> abstimmen, dann plane ich los und melde mich mit dem fertigen Programm. 🚀
+      </p>
+      <div class="next-step">
+        <button class="btn-next" onclick="goToStep(2)">Los geht's → Schritt 2</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ STEP 2 ═══════════════ -->
+  <section class="step" id="s2">
+    <div class="step-head" onclick="toggleStep(2)">
+      <div class="step-num">02</div>
+      <div class="step-info">
+        <div class="step-title">Termin auswählen</div>
+        <div class="step-desc">3 Freitage – welche passen dir?</div>
+        <div class="step-time">⏱️ ~30 Sekunden</div>
+      </div>
+      <span class="chev">▾</span>
+    </div>
+    <div class="step-body">
+      <p class="body-text">Erik hat an folgenden Tagen Zeit. <strong>Mehrfachauswahl ist möglich</strong> – kreuz alle Tage an, an denen du kannst:</p>
+
+      <!-- ═══ STRAWPOLL EMBED 1 ═══ -->
+      <div class="poll-embed" id="poll-1">
+        <span class="poll-embed-icon">🗳️</span>
+        <div class="poll-embed-title">Termin-Umfrage</div>
+        <iframe
+          src="https://strawpoll.com/embed/eJnvVkj4Gnv"
+          width="100%"
+          height="420"
+          frameborder="0"
+          style="border:0"
+          title="Termin-Umfrage">
+        </iframe>
+        <div class="btn-row">
+          <a href="https://strawpoll.com/eJnvVkj4Gnv" target="_blank" class="btn btn-out">→ Umfrage 1 direkt öffnen</a>
+        </div>
+      </div>
+
+      <div class="next-step">
+        <button class="btn-next" onclick="goToStep(3)">Weiter zu Schritt 3 →</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ STEP 3 ═══════════════ -->
+  <section class="step" id="s3">
+    <div class="step-head" onclick="toggleStep(3)">
+      <div class="step-num">03</div>
+      <div class="step-info">
+        <div class="step-title">Anreise klären</div>
+        <div class="step-desc">Wo wohnst du, wie kommst du zum Treffpunkt?</div>
+        <div class="step-time">⏱️ ~30 Sekunden</div>
+      </div>
+      <span class="chev">▾</span>
+    </div>
+    <div class="step-body">
+      <p class="body-text">Wichtig für die Logistik: Treffpunkt ist normalerweise <strong>Mühlhausen</strong>. Falls einer von außerhalb kommt, kann er auch direkt am Trip-Startpunkt dazustoßen (z.B. Erfurt).</p>
+
+      <!-- ═══ STRAWPOLL EMBED 2 ═══ -->
+      <div class="poll-embed" id="poll-2">
+        <span class="poll-embed-icon">🗳️</span>
+        <div class="poll-embed-title">Wo wohnt ihr?</div>
+        <iframe
+          src="https://strawpoll.com/embed/NPgxexw61Z2"
+          width="100%"
+          height="420"
+          frameborder="0"
+          style="border:0"
+          title="Anreise-Umfrage">
+        </iframe>
+        <div class="btn-row">
+          <a href="https://strawpoll.com/NPgxexw61Z2" target="_blank" class="btn btn-out">→ Umfrage 2 direkt öffnen</a>
+        </div>
+      </div>
+
+      <div class="next-step">
+        <button class="btn-next" onclick="goToStep(4)">Jetzt zu den Trips →</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ STEP 4 ═══════════════ -->
+  <section class="step" id="s4">
+    <div class="step-head" onclick="toggleStep(4)">
+      <div class="step-num">04</div>
+      <div class="step-info">
+        <div class="step-title">Lieblings-Trip wählen</div>
+        <div class="step-desc">10 ausgearbeitete Tagespläne – such dir 1-3 Favoriten aus</div>
+        <div class="step-time">⏱️ ~3 Minuten Lesen</div>
+      </div>
+      <span class="chev">▾</span>
+    </div>
+    <div class="step-body">
+      <p class="body-text">
+        Hier kommen die <strong>10 Tagespläne</strong>. Alle sind auf Eriks Vorlieben zugeschnitten: <strong>alte Autos / Schrauben</strong>, <strong>Action</strong> (Lasertag, Paintball – Gokart raus, das hatten wir schon), und <strong>deutsches Essen</strong>. Klick auf eine Karte für den vollen Tagesablauf, Preise und Tipps.
+      </p>
+      <div class="tip-block">
+        <span class="icon">💰</span>
+        <div><strong>Preise pro Person:</strong> Inkl. Bus 150€/Tag (wenn Fahrt > 1h), Diesel, Eintritte, Mittag- + Abendessen mit Getränken (~35€). Erik wird nicht zur Kasse gebeten – Kosten durch <strong>7</strong> geteilt.</div>
+      </div>
+
+      <div class="scenarios-section">
+        <div class="filter-bar">
+          <button class="chip on" onclick="filt('all',this)">Alle 10</button>
+          <button class="chip" onclick="filt('guenstig',this)">💚 Günstig &lt;130€</button>
+          <button class="chip" onclick="filt('mittel',this)">🟡 Mittel 130-180€</button>
+          <button class="chip" onclick="filt('premium',this)">🔴 Premium 180€+</button>
+          <button class="chip" onclick="filt('auto',this)">🏎️ Auto-Fokus</button>
+          <button class="chip" onclick="filt('action',this)">💥 Action-Fokus</button>
+        </div>
+
+        <!-- ────────── CARD 1 ────────── -->
+        <div class="card" data-tags="mittel action" onclick="toggleCard(this,event)">
+          <div class="card-head">
+            <div class="num">1</div>
+            <div class="card-meta">
+              <div class="card-title">Action-Tag Ohrdruf + Feuerkugel Erfurt</div>
+              <div class="card-sub">Paintball · Lasertag · Bogenschießen → Thüringer Abend</div>
+            </div>
+            <div class="badges"><span class="badge bm-c">~133€ pp</span><span class="badge bd-c">Bus</span><span class="badge bt-c">Action</span></div>
+            <span class="chev2">▾</span>
+          </div>
+          <div class="card-body">
+            <ul class="tl">
+              <li><strong>09:30 – Treffen Mühlhausen</strong>Begrüßung, kurze Ansage, Bus startet</li>
+              <li><strong>10:00 – Abfahrt nach Ohrdruf</strong>Kleinbus (~1h Fahrt)</li>
+              <li><strong>11:00 – Ankunft Adventurepark Thüringen</strong>Briefing, Ausrüstung anlegen</li>
+              <li><strong>11:30–16:30 – Adventure Day Paket</strong>Paintball + Lasertag + Bogenschießen + Bubbleball/Axt werfen. Ganztagsprogramm, eine der größten Anlagen Mitteldeutschlands.</li>
+              <li><strong>17:00 – Abfahrt Erfurt</strong>~30 Min., kurze Verschnaufpause</li>
+              <li><strong>17:45 – Spaziergang Krämerbrücke</strong>Lockeres Ankommen, Fotos</li>
+              <li><strong>19:00 – Abendessen Feuerkugel Erfurt</strong>Traditionsreichste Gaststätte Erfurts. Thüringer Klöße, Mutzbraten, Bierbraten. Reservierung nötig!</li>
+              <li><strong>22:00 – Rückfahrt Mühlhausen</strong>Ankunft ~23:00</li>
+            </ul>
+            <div class="cost-table">
+              <table>
+                <tr><td>Bus 150€ + Diesel (~160 km)</td><td>24€</td></tr>
+                <tr><td>Adventure Day (60€ × 8/7)</td><td>69€</td></tr>
+                <tr><td>Abendessen (35€ × 8/7)</td><td>40€</td></tr>
+                <tr class="total"><td>Total pro Person</td><td>~133€</td></tr>
+              </table>
+            </div>
+            <div class="tip">💡 Adventure-Day-Paket online unter <strong>adventurepark-thueringen.de</strong> buchbar. Anzahlung erforderlich. Ohne Bus (Carpool) ~110€ pp.</div>
+          </div>
+        </div>
+
+        <!-- ────────── CARD 2 ────────── -->
+        <div class="card" data-tags="guenstig action" onclick="toggleCard(this,event)">
+          <div class="card-head">
+            <div class="num">2</div>
+            <div class="card-meta">
+              <div class="card-title">Erfurt Komplett-Tag – Lasertag + Bowling</div>
+              <div class="card-sub">Game On Erfurt · Krämerbrücke · Wirtshaus Christoffel</div>
+            </div>
+            <div class="badges"><span class="badge bg-c">~104€ pp</span><span class="badge bd-c">Carpool</span><span class="badge bt-c">Action</span></div>
+            <span class="chev2">▾</span>
+          </div>
+          <div class="card-body">
+            <ul class="tl">
+              <li><strong>11:00 – Treffen Mühlhausen</strong>Carpool nach Erfurt (~50 Min., Sprit splitten)</li>
+              <li><strong>12:30 – Mittagessen Erfurt</strong>Zum Güldenen Rade oder Schwarzburger Hof – echte Thüringer Hausmannskost</li>
+              <li><strong>14:00 – Stadtbummel Krämerbrücke</strong>Petersberg, Altstadt, kurzer Verdauungs-Spaziergang</li>
+              <li><strong>15:30–18:30 – Game On Erfurt</strong>Lasertag (1h, Thüringen-einzigartige Anlage) + Schwarzlicht-Bowling auf 10 Bahnen. Kombipaket.</li>
+              <li><strong>19:30 – Abendessen Wirtshaus Christoffel</strong>Mittelalterliches Ambiente, deftige Braten, hausgemachte Suppen. Bedienung in Kostümen.</li>
+              <li><strong>22:30 – Rückfahrt Mühlhausen</strong>~50 Min.</li>
+            </ul>
+            <div class="cost-table">
+              <table>
+                <tr><td>Carpool Sprit (~110 km)</td><td>5€</td></tr>
+                <tr><td>Mittagessen (18€ × 8/7)</td><td>21€</td></tr>
+                <tr><td>Game On Lasertag+Bowling (30€ × 8/7)</td><td>34€</td></tr>
+                <tr><td>Abendessen Wirtshaus (35€ × 8/7)</td><td>40€</td></tr>
+                <tr class="total"><td>Total pro Person</td><td>~100€</td></tr>
+              </table>
+            </div>
+            <div class="tip">💡 <strong>Günstigste Option</strong> – kein Bus nötig, alles in Erfurt. Ideal wenn Teilnehmer von weit anreisen.</div>
+          </div>
+        </div>
+
+        <!-- ────────── CARD 3 ────────── -->
+        <div class="card" data-tags="guenstig action" onclick="toggleCard(this,event)">
+          <div class="card-head">
+            <div class="num">3</div>
+            <div class="card-meta">
+              <div class="card-title">Paintball Jungle Tautenhain + Weimar</div>
+              <div class="card-sub">115.000 m² · 13 Spielfelder · größte PB-Anlage Mitteldeutschlands</div>
+            </div>
+            <div class="badges"><span class="badge bg-c">~129€ pp</span><span class="badge bd-c">Bus</span><span class="badge bt-c">Action</span></div>
+            <span class="chev2">▾</span>
+          </div>
+          <div class="card-body">
+            <ul class="tl">
+              <li><strong>09:30 – Treffen Mühlhausen</strong>Bus startet</li>
+              <li><strong>10:00 – Abfahrt Tautenhain</strong>~1:30h Fahrt mit Bus</li>
+              <li><strong>11:30 – Briefing Paintball Jungle</strong>Einweisung, Ausrüstung</li>
+              <li><strong>12:00–16:00 – Paintball Action</strong>13 Spielfelder: Wald, Wilder Westen, Festung, Indoor. JGA-Pakete mit Sonderspielmodi.</li>
+              <li><strong>16:30 – Abfahrt Weimar</strong>~50 Min.</li>
+              <li><strong>17:30 – Stadtbummel Weimar</strong>Schillerstraße, Goethe- und Schillerdenkmal, Marktplatz</li>
+              <li><strong>19:00 – Abendessen Weimar</strong>Gaststätte Alte Remise oder lokales Wirtshaus mit Thüringer Küche</li>
+              <li><strong>21:30 – Rückfahrt</strong>~1:30h</li>
+            </ul>
+            <div class="cost-table">
+              <table>
+                <tr><td>Bus 150€ + Diesel (~270 km)</td><td>26€</td></tr>
+                <tr><td>Paintball Jungle (55€ × 8/7)</td><td>63€</td></tr>
+                <tr><td>Abendessen Weimar (35€ × 8/7)</td><td>40€</td></tr>
+                <tr class="total"><td>Total pro Person</td><td>~129€</td></tr>
+              </table>
+            </div>
+            <div class="tip">💡 Hardcore-Paintball-Tag. JGA-Paket direkt anfragen: <strong>paintball-jungle.de</strong></div>
+          </div>
+        </div>
+
+        <!-- ────────── CARD 4 ────────── -->
+        <div class="card" data-tags="mittel auto action" onclick="toggleCard(this,event)">
+          <div class="card-head">
+            <div class="num">4</div>
+            <div class="card-meta">
+              <div class="card-title">Horch Museum Zwickau + Lasertag Chemnitz</div>
+              <div class="card-sub">Auto-Kultur am Vormittag · Action am Nachmittag</div>
+            </div>
+            <div class="badges"><span class="badge bm-c">~133€ pp</span><span class="badge bd-c">Bus</span><span class="badge bt-c">Auto+Action</span></div>
+            <span class="chev2">▾</span>
+          </div>
+          <div class="card-body">
+            <ul class="tl">
+              <li><strong>08:30 – Treffen Mühlhausen</strong>Frühstart, Bus rollt</li>
+              <li><strong>09:00 – Abfahrt Zwickau</strong>~2h mit Bus</li>
+              <li><strong>11:00 – Ankunft August Horch Museum</strong>Audi-Wurzeln auf 6.500 m²</li>
+              <li><strong>11:30–13:30 – Geführte Tour</strong>Horch, Audi, DKW, Wanderer, Trabant – mit <strong>Motorprüfstandvorführung</strong> (Klassiker erwachen live zum Leben). 160+ Exponate in originalgetreuen Kulissen.</li>
+              <li><strong>14:00 – Mittagessen am Museum</strong>Eigenes Restaurant am Museum</li>
+              <li><strong>15:00 – Abfahrt Chemnitz</strong>~30 Min.</li>
+              <li><strong>15:30–17:00 – Lasertag Chemnitz</strong>Indoor-Arena, mehrere Spielmodi, gut geeignet für Gruppen</li>
+              <li><strong>17:30 – Snackpause / Innenstadt</strong>Kurzer Bummel</li>
+              <li><strong>19:00 – Abendessen Chemnitz</strong>Sächsische Gaststätte, deftiges Essen</li>
+              <li><strong>21:00 – Rückfahrt</strong>~2h, Ankunft ~23:00</li>
+            </ul>
+            <div class="cost-table">
+              <table>
+                <tr><td>Bus 150€ + Diesel (~440 km)</td><td>30€</td></tr>
+                <tr><td>Museum + Führung (17€ × 8/7)</td><td>19€</td></tr>
+                <tr><td>Mittagessen (18€ × 8/7)</td><td>21€</td></tr>
+                <tr><td>Lasertag Chemnitz (20€ × 8/7)</td><td>23€</td></tr>
+                <tr><td>Abendessen (35€ × 8/7)</td><td>40€</td></tr>
+                <tr class="total"><td>Total pro Person</td><td>~133€</td></tr>
+              </table>
+            </div>
+            <div class="tip">💡 Buchung Führung: <strong>horch-museum.de</strong> – Motorprüfstand-Vorführung extra anfragen!</div>
+          </div>
+        </div>
+
+        <!-- ────────── CARD 5 ────────── -->
+        <div class="card" data-tags="mittel auto" onclick="toggleCard(this,event)">
+          <div class="card-head">
+            <div class="num">5</div>
+            <div class="card-meta">
+              <div class="card-title">Oldtimer-Rallye durch Thüringen ⭐</div>
+              <div class="card-sub">Jeder fährt selbst · Mercedes, Käfer, Mustang · Rennsteig</div>
+            </div>
+            <div class="badges"><span class="badge bm-c">~165€ pp</span><span class="badge bd-c">Carpool</span><span class="badge bt-c">Auto★</span></div>
+            <span class="chev2">▾</span>
+          </div>
+          <div class="card-body">
+            <ul class="tl">
+              <li><strong>09:30 – Treffen Mühlhausen</strong>Carpool nach Erfurt</li>
+              <li><strong>10:30 – Fahrzeugübernahme Erfurt</strong>2-3 Oldtimer (gemischte Auswahl) bei <strong>fahren-mit-stil.de</strong>. Einweisung in jedes Fahrzeug.</li>
+              <li><strong>11:30 – Rallye-Start</strong>Route: Erfurt → Gotha → Eisenach → Wartburg-Aussichtspunkt</li>
+              <li><strong>13:00 – Foto-Stopp Wartburg</strong>Gruppenbild mit Oldtimern vor der Burg</li>
+              <li><strong>13:30 – Mittagessen Eisenach</strong>Biergarten oder Wirtshaus in der Altstadt</li>
+              <li><strong>15:00 – Rückfahrt via Rennsteig</strong>Panoramastrecke durch den Thüringer Wald – Highlight!</li>
+              <li><strong>17:30 – Fahrzeugrückgabe Erfurt</strong></li>
+              <li><strong>18:00 – Pause / Frischmachen</strong></li>
+              <li><strong>19:30 – Abendessen Ballenberger Erfurt</strong>Michelin-Empfehlung, moderner Thüringen-Klassiker, faire Preise</li>
+              <li><strong>22:00 – Rückfahrt Mühlhausen</strong></li>
+            </ul>
+            <div class="cost-table">
+              <table>
+                <tr><td>Carpool Sprit (~110 km)</td><td>5€</td></tr>
+                <tr><td>Oldtimer-Miete (3 Autos × 250€)</td><td>86€</td></tr>
+                <tr><td>Sprit Oldtimer (alle V8 etc.)</td><td>10€</td></tr>
+                <tr><td>Mittagessen (18€ × 8/7)</td><td>21€</td></tr>
+                <tr><td>Abendessen Ballenberger (40€ × 8/7)</td><td>46€</td></tr>
+                <tr class="total"><td>Total pro Person</td><td>~168€</td></tr>
+              </table>
+            </div>
+            <div class="tip">💡 <strong>Eriks Traum-Tag.</strong> 5+ Jahre Führerschein bei jedem Fahrer Voraussetzung. Kaution beachten (~500€/Auto). Anbieter: <strong>fahren-mit-stil.de</strong></div>
+          </div>
+        </div>
+
+        <!-- ────────── CARD 6 ────────── -->
+        <div class="card" data-tags="premium auto" onclick="toggleCard(this,event)">
+          <div class="card-head">
+            <div class="num">6</div>
+            <div class="card-meta">
+              <div class="card-title">Horch Museum + Trabant-Tour Dresden</div>
+              <div class="card-sub">DDR-Auto-Doppelpack · Trabant, Wartburg, Wolga selbst fahren</div>
+            </div>
+            <div class="badges"><span class="badge bp-c">~205€ pp</span><span class="badge bd-c">Bus</span><span class="badge bt-c">Auto</span></div>
+            <span class="chev2">▾</span>
+          </div>
+          <div class="card-body">
+            <ul class="tl">
+              <li><strong>07:30 – Treffen Mühlhausen</strong>Frühstart!</li>
+              <li><strong>08:00 – Abfahrt mit Bus</strong>~2h nach Zwickau</li>
+              <li><strong>10:00–12:00 – August Horch Museum</strong>Selbstgeführter Rundgang (Audi, Horch, DKW, Trabant)</li>
+              <li><strong>12:30 – Schnelles Mittagessen</strong>Im oder nahe Museum</li>
+              <li><strong>13:00 – Abfahrt Dresden</strong>~1:30h</li>
+              <li><strong>14:30 – Ankunft Rostlaube Dresden</strong>Fahrzeugübernahme: Trabant, Wartburg, Wolga, Lada, Mercedes 230</li>
+              <li><strong>15:00–17:30 – DDR-Oldtimer-Tour</strong>Selbst fahren durch Dresden mit App-Tour-Guide. Frauenkirche, Elbufer, Weinberge.</li>
+              <li><strong>18:00 – Spaziergang Brühlsche Terrasse</strong></li>
+              <li><strong>19:30 – Abendessen Dresden</strong>Sächsische Küche – Schnitzel, Sauerbraten, Eisbein</li>
+              <li><strong>22:00 – Rückfahrt</strong>~3h, Ankunft ~01:00</li>
+            </ul>
+            <div class="cost-table">
+              <table>
+                <tr><td>Bus 150€ + Diesel (~570 km)</td><td>32€</td></tr>
+                <tr><td>Museum (17€ × 8/7)</td><td>19€</td></tr>
+                <tr><td>Mittagessen (18€ × 8/7)</td><td>21€</td></tr>
+                <tr><td>Trabant Rostlaube (80€ × 8/7)</td><td>91€</td></tr>
+                <tr><td>Abendessen (35€ × 8/7)</td><td>40€</td></tr>
+                <tr class="total"><td>Total pro Person</td><td>~203€</td></tr>
+              </table>
+            </div>
+            <div class="tip">💡 <strong>Langer Tag</strong> – aber doppeltes Auto-Highlight. Rostlaube Dresden: <strong>rostlaube-dresden.de</strong></div>
+          </div>
+        </div>
+
+        <!-- ────────── CARD 7 ────────── -->
+        <div class="card" data-tags="mittel auto" onclick="toggleCard(this,event)">
+          <div class="card-head">
+            <div class="num">7</div>
+            <div class="card-meta">
+              <div class="card-title">Schrauber-Workshop + Oldtimer fahren ⭐</div>
+              <div class="card-sub">Hände schmutzig · Vergaser, Zündung, Motorcheck · dann Ausfahrt</div>
+            </div>
+            <div class="badges"><span class="badge bm-c">~178€ pp</span><span class="badge bd-c">Carpool</span><span class="badge bt-c">Auto★</span></div>
+            <span class="chev2">▾</span>
+          </div>
+          <div class="card-body">
+            <ul class="tl">
+              <li><strong>09:00 – Treffen Mühlhausen</strong>Carpool nach Erfurt/Gotha</li>
+              <li><strong>10:00 – Ankunft Werkstatt</strong>Über lokalen Oldtimer-Club gebucht (z.B. Thüringer Oldtimer-Club e.V.)</li>
+              <li><strong>10:30–13:00 – Schrauber-Session</strong>Mechaniker erklärt Vergaser, Zündung, Ölwechsel. Jeder darf Hand anlegen, Motoren anlassen, unter die Haube schauen.</li>
+              <li><strong>13:00 – Mittagspause</strong>Brotzeit in der Werkstatt</li>
+              <li><strong>14:00 – Wechsel zum Oldtimer-Vermieter</strong></li>
+              <li><strong>14:30–17:30 – Ausfahrt</strong>2 Oldtimer (z.B. Ford Mustang V8 Cabrio, Mercedes 230) – Gruppe fährt abwechselnd. Tour Eisenach + Wartburg.</li>
+              <li><strong>18:00 – Frischmachen</strong></li>
+              <li><strong>19:30 – Abendessen Gasthaus Schloss Hubertus Erfurt</strong>Steigerwald, gemütlich, deftig deutsch</li>
+              <li><strong>22:30 – Rückfahrt</strong></li>
+            </ul>
+            <div class="cost-table">
+              <table>
+                <tr><td>Carpool Sprit</td><td>5€</td></tr>
+                <tr><td>Schrauber-Workshop (50€ × 8/7)</td><td>57€</td></tr>
+                <tr><td>Oldtimer 3h (2 Autos × 169€)</td><td>48€</td></tr>
+                <tr><td>Sprit Oldtimer</td><td>8€</td></tr>
+                <tr><td>Mittagessen (18€ × 8/7)</td><td>21€</td></tr>
+                <tr><td>Abendessen (35€ × 8/7)</td><td>40€</td></tr>
+                <tr class="total"><td>Total pro Person</td><td>~179€</td></tr>
+              </table>
+            </div>
+            <div class="tip">💡 <strong>Ein-zigartig für Erik.</strong> Workshop muss individuell gebucht werden (lokale Clubs anschreiben). Kontakt: Thüringer Oldtimer-Club e.V.</div>
+          </div>
+        </div>
+
+        <!-- ────────── CARD 8 ────────── -->
+        <div class="card" data-tags="premium auto action" onclick="toggleCard(this,event)">
+          <div class="card-head">
+            <div class="num">8</div>
+            <div class="card-meta">
+              <div class="card-title">Schleizer Dreieck – Rennstrecke Thüringen</div>
+              <div class="card-sub">Eine der ältesten aktiven Rennstrecken Deutschlands</div>
+            </div>
+            <div class="badges"><span class="badge bp-c">~205€ pp</span><span class="badge bd-c">Bus</span><span class="badge bt-c">Rennsport</span></div>
+            <span class="chev2">▾</span>
+          </div>
+          <div class="card-body">
+            <ul class="tl">
+              <li><strong>08:30 – Treffen Mühlhausen</strong></li>
+              <li><strong>09:00 – Abfahrt Schleiz</strong>~1:45h mit Bus</li>
+              <li><strong>10:45 – Ankunft Schleizer Dreieck</strong>Briefing mit Instruktor</li>
+              <li><strong>11:00–16:00 – Programm Rennstrecke</strong>3 Optionen: (a) Fahrerlebnis-Paket mit Instruktor, (b) Trackday in eigenen Fahrzeugen, (c) Zuschauer-Rennveranstaltung. <strong>Echtes Renn-Feeling</strong> in Thüringen!</li>
+              <li><strong>16:30 – Erfrischung Talsperre Zeulenroda</strong>Bier am Wasser, ~15 Min. entfernt</li>
+              <li><strong>18:30 – Abendessen Region</strong>Gasthof in Schleiz oder Gera</li>
+              <li><strong>21:00 – Rückfahrt</strong>~1:45h</li>
+            </ul>
+            <div class="cost-table">
+              <table>
+                <tr><td>Bus 150€ + Diesel (~340 km)</td><td>28€</td></tr>
+                <tr><td>Erlebnispaket Mittel (100€ × 8/7)</td><td>114€</td></tr>
+                <tr><td>Mittagspause</td><td>21€</td></tr>
+                <tr><td>Abendessen (35€ × 8/7)</td><td>40€</td></tr>
+                <tr class="total"><td>Total pro Person</td><td>~203€</td></tr>
+              </table>
+            </div>
+            <div class="tip">💡 <strong>Geheimtipp Thüringen!</strong> Trackday teurer (~260€ pp). Termine + Buchung: <strong>schleizer-dreieck.de</strong></div>
+          </div>
+        </div>
+
+        <!-- ────────── CARD 9 ────────── -->
+        <div class="card" data-tags="premium auto action" onclick="toggleCard(this,event)">
+          <div class="card-head">
+            <div class="num">9</div>
+            <div class="card-meta">
+              <div class="card-title">Nürburgring Nordschleife ⭐⭐</div>
+              <div class="card-sub">Die Grüne Hölle · 20,9 km · 73 Kurven</div>
+            </div>
+            <div class="badges"><span class="badge bp-c">~245€ pp</span><span class="badge bd-c">Bus</span><span class="badge bt-c">Auto★★</span></div>
+            <span class="chev2">▾</span>
+          </div>
+          <div class="card-body">
+            <ul class="tl">
+              <li><strong>06:30 – Treffen Mühlhausen</strong>Frühstart!</li>
+              <li><strong>07:00 – Abfahrt mit Bus</strong>~4h Fahrt – Frühstück & Snacks im Bus</li>
+              <li><strong>11:00 – Ankunft Nürburgring</strong>Ring Boulevard, kurzer Snack</li>
+              <li><strong>11:30–15:30 – Touristenfahrten Nordschleife</strong>Mit gemieteten Sportwagen (Vorab-Buchung!): jeder fährt selbst über die legendäre Strecke. <strong>20,9 km, 73 Kurven, 'Grüne Hölle'</strong>. Alternativ: Ring Taxi (Profi-Fahrer im Porsche GT3).</li>
+              <li><strong>15:30 – Ring Boulevard / Museum</strong>Formel-1-Showcars, Simulator-Erlebnis</li>
+              <li><strong>17:00 – Snack vor Rückfahrt</strong></li>
+              <li><strong>17:30 – Rückfahrt</strong>~4h, Abendessen unterwegs (Imbiss/Restaurant)</li>
+              <li><strong>22:00 – Ankunft Mühlhausen</strong></li>
+            </ul>
+            <div class="cost-table">
+              <table>
+                <tr><td>Bus 150€ + Diesel (~760 km)</td><td>36€</td></tr>
+                <tr><td>Auto-Miete + Tageskarte (130€ × 8/7)</td><td>149€</td></tr>
+                <tr><td>Mittag/Snacks</td><td>20€</td></tr>
+                <tr><td>Abendessen unterwegs (35€ × 8/7)</td><td>40€</td></tr>
+                <tr class="total"><td>Total pro Person</td><td>~245€</td></tr>
+              </table>
+            </div>
+            <div class="tip">💡 <strong>Bucket-List-Trip!</strong> Touristenfahrten-Termine vorab prüfen – nicht jedes Wochenende offen. <strong>nuerburgring.de</strong> → Touristenfahrten</div>
+          </div>
+        </div>
+
+        <!-- ────────── CARD 10 ────────── -->
+        <div class="card" data-tags="mittel auto action" onclick="toggleCard(this,event)">
+          <div class="card-head">
+            <div class="num">10</div>
+            <div class="card-meta">
+              <div class="card-title">Mercedes Stuttgart + Weinstube + Lasertag ⭐⭐⭐</div>
+              <div class="card-sub">Der Pilgerort für jeden Mercedes-Fan · Maultaschen · Action zum Abschluss</div>
+            </div>
+            <div class="badges"><span class="badge bm-c">~140€ pp</span><span class="badge bd-c">Bus</span><span class="badge bt-c">Auto+Action</span></div>
+            <span class="chev2">▾</span>
+          </div>
+          <div class="card-body">
+            <ul class="tl">
+              <li><strong>06:00 – Treffen Mühlhausen</strong>Sehr früher Start</li>
+              <li><strong>06:30 – Abfahrt mit Bus</strong>~4h nach Stuttgart – Frühstück im Bus</li>
+              <li><strong>10:30 – Ankunft Stuttgart</strong>Direkt zum Museum</li>
+              <li><strong>11:00–14:00 – Mercedes-Benz Museum</strong>Über 160 Fahrzeuge auf 9 Ebenen, 9 Epochen: Patent-Motorwagen 1886 → Silberpfeile → 300SL Flügeltürer → moderner AMG. <strong>Eriks heiliger Boden.</strong></li>
+              <li><strong>14:30 – Mittagessen Stuttgarter Weinstube</strong>Maultaschen, Gaisburger Marsch, Zwiebelrostbraten – schwäbische Klassiker</li>
+              <li><strong>16:00 – Lasertag Stuttgart</strong>Action-Programm zum Verdauen. ~1,5h Spielzeit.</li>
+              <li><strong>17:30 – Snack vor Rückfahrt</strong></li>
+              <li><strong>18:00 – Rückfahrt</strong>~4h</li>
+              <li><strong>22:00 – Ankunft Mühlhausen</strong></li>
+            </ul>
+            <div class="cost-table">
+              <table>
+                <tr><td>Bus 150€ + Diesel (~740 km)</td><td>36€</td></tr>
+                <tr><td>Mercedes Museum (13€ × 8/7)</td><td>15€</td></tr>
+                <tr><td>Mittagessen Weinstube (35€ × 8/7)</td><td>40€</td></tr>
+                <tr><td>Lasertag Stuttgart (20€ × 8/7)</td><td>23€</td></tr>
+                <tr><td>Snacks Bus / unterwegs</td><td>15€</td></tr>
+                <tr><td>Abend-Snack</td><td>10€</td></tr>
+                <tr class="total"><td>Total pro Person</td><td>~139€</td></tr>
+              </table>
+            </div>
+            <div class="tip">💡 <strong>Überraschend günstig!</strong> Museum nur 13€, Lasertag billig, schwäbisches Essen fair. Bonus: Porsche Museum nur 10 Min. entfernt – Kombi möglich (+12€). <strong>mercedes-benz.com/museum</strong></div>
+          </div>
+        </div>
+
+        <!-- ────────── OWN IDEA SLOT ────────── -->
+        <div class="own-idea-card">
+          <h4>+ Eigene Idee?</h4>
+          <p>Falls du eine bessere Idee hast, schreib sie unten in die Strawpoll-Kommentarsektion – ich nehm sie auf und schau was machbar ist.</p>
+        </div>
+      </div>
+
+      <!-- ═══ STRAWPOLL EMBED 3 ═══ -->
+      <div class="poll-embed" id="poll-3">
+        <span class="poll-embed-icon">🗳️</span>
+        <div class="poll-embed-title">Welches Szenario?</div>
+        <iframe
+          src="https://strawpoll.com/embed/6QnMQ0aplne"
+          width="100%"
+          height="620"
+          frameborder="0"
+          style="border:0"
+          title="Trip-Umfrage">
+        </iframe>
+        <div class="btn-row">
+          <a href="https://strawpoll.com/6QnMQ0aplne" target="_blank" class="btn btn-out">→ Umfrage 3 direkt öffnen</a>
+        </div>
+      </div>
+
+      <div class="next-step">
+        <button class="btn-next" onclick="goToStep(5)">Letzter Schritt →</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ STEP 5 ═══════════════ -->
+  <section class="step" id="s5">
+    <div class="step-head" onclick="toggleStep(5)">
+      <div class="step-num">05</div>
+      <div class="step-info">
+        <div class="step-title">Wie's weitergeht</div>
+        <div class="step-desc">Was nach deiner Stimme passiert</div>
+      </div>
+      <span class="chev">▾</span>
+    </div>
+    <div class="step-body">
+      <p class="body-text">Sobald alle abgestimmt haben, läuft folgendes:</p>
+
+      <ol style="font-size:14px;color:var(--muted2);padding-left:24px;line-height:2;margin-bottom:16px">
+        <li><strong style="color:var(--text)">Ich sammle die Stimmen</strong> aus allen 3 Umfragen</li>
+        <li><strong style="color:var(--text)">Termin und Trip stehen fest</strong> – ich kommunizier's in der WhatsApp-Gruppe / Diskussion offen</li>
+        <li><strong style="color:var(--text)">Buchungen + Logistik</strong> mache ich – Anfrage bei Restaurant, Bus, Aktivitäten</li>
+        <li><strong style="color:var(--text)">Bezahlung:</strong> Ich berechne vorher die Kosten für Festpreise; teilen durch Anzahl der Leute die teilnehmen, jeder Zahlt seinen Anteil über Paypal oder ähnlich. Mahlzeiten zahl jeder selbst.</li>
+        <li><strong style="color:var(--text)">danach</strong> bekommst ihr das fertige Programm mit Treffpunkt + Uhrzeit</li>
+        <li><strong style="color:var(--text)">Am Tag selbst:</strong> einfach pünktlich sein + gute Laune mitbringen 💪</li>
+      </ol>
+
+      <div class="tip-block">
+        <span class="icon">❓</span>
+        <div><strong>Fragen?</strong> Schreib mir direkt im WhatsApp-Chat oder per PM. Ich helf gern.</div>
+      </div>
+
+      <p class="body-text" style="text-align:center;margin-top:30px;font-size:18px;color:var(--amber);font-weight:500">
+        Danke fürs Mitmachen! 🎉<br>
+        <span style="font-size:14px;color:var(--muted2);font-weight:400">Wird ein unvergesslicher Tag für Erik.</span>
+      </p>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  JGA <span class="heart">Erik</span> 2025 &nbsp;·&nbsp; Mit ♥ organisiert
+</footer>
+
+<script>
+function toggleStep(n){
+  const s=document.getElementById('s'+n);
+  s.classList.toggle('open');
+}
+function goToStep(n){
+  for(let i=1;i<=5;i++){document.getElementById('s'+i).classList.remove('open')}
+  const s=document.getElementById('s'+n);
+  s.classList.add('open');
+  s.scrollIntoView({behavior:'smooth',block:'start'});
+}
+function toggleCard(card,e){
+  e.stopPropagation();
+  card.classList.toggle('open');
+}
+function filt(tag,chip){
+  document.querySelectorAll('.chip').forEach(c=>c.classList.remove('on'));
+  chip.classList.add('on');
+  document.querySelectorAll('.card').forEach(card=>{
+    if(tag==='all'){card.style.display='';}
+    else{card.style.display=(card.dataset.tags||'').includes(tag)?'':'none';}
+  });
+}
+</script>
+</body>
+</html>
